@@ -13,6 +13,7 @@ import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -35,6 +36,11 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/pricing': typeof PricingRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/pricing': typeof PricingRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/pricing': typeof PricingRoute
@@ -65,12 +74,25 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/features' | '/pricing' | '/testimonials'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/dashboard'
+    | '/features'
+    | '/pricing'
+    | '/testimonials'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/features' | '/pricing' | '/testimonials'
+  to:
+    | '/'
+    | '/contact'
+    | '/dashboard'
+    | '/features'
+    | '/pricing'
+    | '/testimonials'
   id:
     | '__root__'
     | '/'
+    | '/contact'
     | '/dashboard'
     | '/features'
     | '/pricing'
@@ -79,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRoute
   FeaturesRoute: typeof FeaturesRoute
   PricingRoute: typeof PricingRoute
@@ -115,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -127,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
   DashboardRoute: DashboardRoute,
   FeaturesRoute: FeaturesRoute,
   PricingRoute: PricingRoute,
