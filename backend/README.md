@@ -33,3 +33,5 @@ Auth header: `Authorization: Bearer <token>`.
 ## MongoDB Atlas
 
 Create a free cluster, add a DB user, whitelist `0.0.0.0/0` (or Render IPs), copy the SRV URI into `MONGODB_URI`.
+updated deployment
+
