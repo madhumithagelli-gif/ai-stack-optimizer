@@ -96,9 +96,15 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
-          <Link to="/dashboard" className="btn-glow inline-flex rounded-full px-4 py-2 text-sm font-medium">
-            Analyze My Stack
-          </Link>
+          {user ? (
+            <button onClick={() => { logout(); setOpen(false); navigate({ to: "/" }); }} className="btn-glow inline-flex rounded-full px-4 py-2 text-sm font-medium">
+              Sign out
+            </button>
+          ) : (
+            <Link to="/signup" onClick={() => setOpen(false)} className="btn-glow inline-flex rounded-full px-4 py-2 text-sm font-medium">
+              Get started
+            </Link>
+          )}
         </motion.div>
       )}
     </motion.header>

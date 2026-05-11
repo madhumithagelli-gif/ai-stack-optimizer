@@ -1,8 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import SiteLayout, { Section } from "@/components/SiteLayout";
 import DashboardMockup from "@/components/DashboardMockup";
 import Counter from "@/components/Counter";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { Loader2 } from "lucide-react";
+import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -13,8 +16,24 @@ export const Route = createFileRoute("/dashboard")({
       { property: "og:description", content: "See every AI subscription, every wasted dollar, every recommendation." },
     ],
   }),
-  component: DashboardPage,
+  component: DashboardGuard,
 });
+
+function DashboardGuard() {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!loading && !user) navigate({ to: "/login" });
+  }, [loading, user, navigate]);
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+  return <DashboardPage />;
+}
 
 function PieRing({ value, label, color }: { value: number; label: string; color: string }) {
   const c = 2 * Math.PI * 38;
