@@ -179,3 +179,23 @@
     animation: shimmer 2.4s linear infinite;
   }
 }
+
+@layer components {
+  .auth-input {
+    width: 100%;
+    border-radius: 0.625rem;
+    border: 1px solid var(--border);
+    background-color: oklch(1 0 0 / 0.04);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    color: var(--foreground);
+    transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+  }
+  .auth-input::placeholder { color: var(--muted-foreground); }
+  .auth-input:focus {
+    outline: none;
+    border-color: oklch(0.78 0.18 220 / 0.6);
+    background-color: oklch(1 0 0 / 0.06);
+    box-shadow: 0 0 0 3px oklch(0.78 0.18 220 / 0.18);
+  }
+}
