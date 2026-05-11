@@ -1,5 +1,5 @@
 const RAW = (import.meta as any).env?.VITE_API_URL as string | undefined;
-export const API_URL = (RAW || "http://localhost:5000").replace(/\/$/, "");
+export const API_URL = (RAW || "http://localhost:5001").replace(/\/$/, "");
 
 export type ApiUser = {
   id: string;
