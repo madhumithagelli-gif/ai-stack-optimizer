@@ -3,6 +3,12 @@
   "env": {
     "VITE_API_URL": "https://ai-stack-optimizer-production.up.railway.app"
   },
+  "functions": {
+    "api/ssr.ts": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  },
   "rewrites": [
     {
       "source": "/assets/:path*",
@@ -20,6 +26,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
         }
       ]
     }

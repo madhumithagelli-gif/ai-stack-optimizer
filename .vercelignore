@@ -4,8 +4,10 @@ node_modules
 .vscode
 .idea
 *.md
-dist/server/wrangler.json
-dist/client/.assetsignore
 .wrangler
 .dev.vars
 wrangler.jsonc
+.lovable
+.prettierignore
+.prettierrc
+src
