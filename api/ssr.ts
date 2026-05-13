@@ -2,8 +2,8 @@ export const config = {
   runtime: "nodejs",
 };
 
-// Import the actual server handler directly, bypassing the dynamic import wrapper
-import serverHandler from "../dist/server/assets/server-C4A5TEzd.js";
+// Import the server handler built by TanStack Start
+import serverHandler from "../dist/server.js";
 
 export default async function handler(request: Request) {
   try {
