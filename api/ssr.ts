@@ -1,5 +1,5 @@
 export const config = {
-  runtime: "nodejs18.x",
+  runtime: "nodejs",
 };
 
 // Import the actual server handler directly, bypassing the dynamic import wrapper
