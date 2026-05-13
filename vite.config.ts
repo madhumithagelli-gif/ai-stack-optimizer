@@ -6,21 +6,13 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-// Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-// Disable cloudflare plugin for Vercel deployment.
+// SPA mode: no SSR, no dist/server/ needed.
+// The backend is deployed on Railway, so we only need static client files for Vercel.
 export default defineConfig({
   cloudflare: false,
   tanstackStart: {
-    server: { 
-      entry: "server",
-      preload: true,
-    },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        entryFileNames: "index.mjs",
-      },
+    spa: {
+      enabled: true,
     },
   },
 });

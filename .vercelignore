@@ -2,13 +2,11 @@
 .gitignore
 .vscode
 .idea
-src
 .lovable
 .prettierignore
 .prettierrc
 .wrangler
 .dev.vars
 wrangler.jsonc
-VERCEL_DEPLOYMENT.md
-README.md
+backend
 *.md
