@@ -4,17 +4,34 @@ export const config = {
 
 export default async function handler(request: Request) {
   try {
-    // In Vercel's build environment, the server is built to dist/server/index.mjs
-    // We need to use the file: protocol with proper path resolution
-    const serverPath = new URL("../dist/server/index.mjs", import.meta.url);
-    const { default: serverHandler } = await import(serverPath.href);
-    
-    if (!serverHandler || !serverHandler.fetch) {
-      throw new Error("Server handler not properly exported");
+    // Vite/TanStack Start output in this repo is dist/server/server.js
+    // Import by trying multiple known filenames to avoid Vercel 404s.
+    const candidatePaths = [
+      "../dist/server/index.mjs",
+      "../dist/server/server.js",
+      "../dist/server/server.mjs",
+      "../dist/server.js",
+      "../dist/server.mjs",
+    ];
+
+    let lastErr: unknown;
+    for (const p of candidatePaths) {
+      try {
+        const serverPath = new URL(p, import.meta.url);
+        const mod = await import(serverPath.href);
+        const serverHandler = mod.default ?? (mod as any);
+        const handlerFn = serverHandler?.fetch ?? serverHandler;
+        if (typeof handlerFn === "function") {
+          const res = await handlerFn(request, {}, {});
+          return res;
+        }
+        lastErr = new Error(`Server handler not a function for: ${p}`);
+      } catch (e) {
+        lastErr = e;
+      }
     }
-    
-    const response = await serverHandler.fetch(request, {}, {});
-    return response;
+
+    throw lastErr instanceof Error ? lastErr : new Error(String(lastErr));
   } catch (error) {
     console.error("[SSR Error]", error);
     const errorDetails = error instanceof Error ? error.message : String(error);
