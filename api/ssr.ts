@@ -2,11 +2,13 @@ export const config = {
   runtime: "nodejs",
 };
 
-// Import the server handler built by TanStack Start
-import serverHandler from "../dist/server.js";
-
 export default async function handler(request: Request) {
   try {
+    // Dynamically import the built server handler at runtime
+    // TanStack Start builds to dist/server/index.mjs
+    const { default: serverHandler } = await import(
+      `../dist/server/index.mjs?t=${Date.now()}`
+    );
     const response = await serverHandler.fetch(request, {}, {});
     return response;
   } catch (error) {

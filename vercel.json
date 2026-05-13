@@ -5,8 +5,8 @@
   },
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/ssr"
+      "source": "/assets/:path*",
+      "destination": "/assets/:path*"
     },
     {
       "source": "/:path*",
